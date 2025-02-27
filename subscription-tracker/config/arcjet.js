@@ -1,5 +1,4 @@
-import {} from "@arcjet/node";
-import arcjet, { detectBot, shield, tokenBucket } from "arcjet";
+import arcjet, { detectBot, shield, tokenBucket } from "@arcjet/node";
 import { ARCJET_KEY } from "./env";
 
 const aj = arcjet({
