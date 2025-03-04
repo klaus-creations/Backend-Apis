@@ -1,8 +1,11 @@
 import aj from "../config/arcjet.js";
 
-export const arcjetMiddleware = async function (req, res, next) {
+const arcjetMiddleware = async (req, res, next) => {
   try {
-    const decision = await aj.protect(req);
+    const decision = await aj.protect(req, { requested: 5 });
+    console.log("this is decision");
+    console.log(decision);
+
     if (decision.isDenied()) {
       if (decision.reason.isRateLimit())
         return res.status(429).json({ error: "Rate limit exceeded" });
@@ -14,7 +17,9 @@ export const arcjetMiddleware = async function (req, res, next) {
 
     next();
   } catch (error) {
-    console.log(`Error in the arcjet middleware ${error}`);
+    console.log(`Arcjet Middleware Error: ${error}`);
     next(error);
   }
 };
+
+export default arcjetMiddleware;
